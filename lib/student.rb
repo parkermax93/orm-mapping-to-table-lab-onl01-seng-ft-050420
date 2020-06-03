@@ -34,10 +34,7 @@ class Student
         VALUES (?, ?)
       SQL
     DB[:conn].execute(sql, self.name, self.grade)
-    sid = <<-SQL
-        SELECT last_insert_rowid()
-      SQL
-    @id = DB[:conn].execute(sid).first.join.to_i
+    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
   end
   
   def self.create(name:,grade:)
